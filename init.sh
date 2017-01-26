@@ -13,11 +13,11 @@ mysql-ctl start
 
 say "remove existing php"
 cd /
-sudo apt-get purge -y php.*
+sudo apt-get purge -y `dpkg -l | grep php| awk '{print $2}' |tr "\n" " "`
 
 say "install php 7.1"
 sudo apt-get install -y software-properties-common
-sudo add-apt-repository ppa:ondrej/php
+sudo add-apt-repository -y ppa:ondrej/php
 sudo apt-get update
 sudo apt-get install -y php7.1 php7.1-dev php7.1-soap php7.1-xml php7.1-zip php7.1-gd php7.1-mysql php7.1-curl php7.1-mbstring php7.1-bcmath php-pear
 sudo pecl install apcu
@@ -36,4 +36,11 @@ say "Install dependencies"
 cd ~/workspace
 composer install
 
+say "Setup typo3"
+./vendor/bin/typo3cms install:setup --non-interactive --database-user-name="root" --database-name="typo3_demo" --admin-user-name="admin" --admin-password="password" --site-name="Auto Install"
+
 say "Done."
+                
+# ./vendor/bin/typo3cms database:updateschema '*.*'
+# ./vendor/bin/typo3cms extension:activate bootstrap_package
+# ./vendor/bin/typo3cms extension:activate introduction
