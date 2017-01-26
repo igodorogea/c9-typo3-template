@@ -11,15 +11,22 @@ say "Prepare machine..."
 say "start db"
 mysql-ctl start
 
-say "remove existing php"
-cd /
-sudo apt-get purge -y `dpkg -l | grep php| awk '{print $2}' |tr "\n" " "`
+say "remove php5"
+
+
+sudo debconf-set-selections <<< "debconf debconf/frontend select Noninteractive"
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-remove boolean true"
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/purge boolean true"
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password "
+
+
+sudo apt-get purge -y `dpkg -l | grep php5| awk '{print $2}' |tr "\n" " "`
 
 say "install php 7.1"
 sudo apt-get install -y software-properties-common
 sudo add-apt-repository -y ppa:ondrej/php
 sudo apt-get update
-sudo apt-get install -y php7.1 php7.1-dev php7.1-soap php7.1-xml php7.1-zip php7.1-gd php7.1-mysql php7.1-curl php7.1-mbstring php7.1-bcmath php-pear
+sudo apt-get install -y libapache2-mod-php7.1 php7.1 php7.1-dev php7.1-fpm php7.1-cli php7.1-common php7.1-soap php7.1-xml php7.1-zip php7.1-mbstring php7.1-bcmath php7.1-curl php7.1-gd php7.1-intl php7.1-json php7.1-mcrypt php7.1-mysql php7.1-readline php7.1-sqlite3 php7.1-tidy php7.1-xmlrpc php7.1-xsl
 sudo pecl install apcu
 
 say "Install imagemagick"
