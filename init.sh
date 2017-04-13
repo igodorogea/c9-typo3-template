@@ -47,7 +47,7 @@ sudo apt-get autoremove -y -qq
 sudo apt-get autoclean -y -qq
 
 
-say "update vhost"
+say "update apache vhost"
 
 sudo sed -i 's/\/home\/ubuntu\/workspace$/\/home\/ubuntu\/workspace\/web/' /etc/apache2/sites-available/001-cloud9.conf
 sudo sed -i 's/\/home\/ubuntu\/workspace>$/\/home\/ubuntu\/workspace\/web>/' /etc/apache2/sites-available/001-cloud9.conf
@@ -60,6 +60,7 @@ composer install
 say "Setup typo3"
 
 ./vendor/bin/typo3cms install:setup --non-interactive --database-user-name="root" --database-name="typo3_demo" --admin-user-name="admin" --admin-password="password" --site-name="Auto Install"
+./vendor/bin/typo3cms extension:activate realurl
 ./vendor/bin/typo3cms extension:activate bootstrap_package
 ./vendor/bin/typo3cms extension:activate introduction
 

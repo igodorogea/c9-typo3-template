@@ -7,10 +7,10 @@
 	"description": "TYPO3 CMS Base Distribution",
 	"license": "GPL-2.0+",
 	"require": {
-		"typo3/cms": "8.5.1 as 8.4.99",
-		"typo3-ter/introduction": "^2.3",
-		"helhum/typo3-console": "^4.1",
-		"dmitryd/typo3-realurl": "^2.1"
+		"typo3/cms": "^8.7",
+		"typo3-ter/introduction": "^3.0",
+		"helhum/typo3-console": "^4.4",
+		"dmitryd/typo3-realurl": "^2.2"
 	},
 	"extra": {
 		"typo3/cms": {
